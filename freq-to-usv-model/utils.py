@@ -1,6 +1,30 @@
 import librosa
 import numpy as np
 
+def get_spectrogram(audio_path, n_fft=1024, hop_length=None):
+    """
+    Computes the spectrogram of a USV audio file.
+
+    Returns
+    -------
+    times : np.ndarray
+        Time values (seconds) for each frame.
+    freqs : np.ndarray
+        Frequency values (Hz) for each bin.
+    magnitude : np.ndarray
+        2D array of magnitude values, shape (n_freq_bins, n_time_frames).
+    """
+    y, sr = librosa.load(audio_path, sr=None)
+
+    if hop_length is None:
+        hop_length = n_fft // 4
+
+    D = librosa.stft(y, n_fft=n_fft, hop_length=hop_length)
+    magnitude = np.abs(D)
+    freqs = librosa.fft_frequencies(sr=sr, n_fft=n_fft)
+    times = librosa.frames_to_time(np.arange(D.shape[1]), sr=sr, hop_length=hop_length)
+
+    return times, freqs, magnitude
 
 def get_main_freq_traj(audio_path, freq_min=20000, freq_max=125000,
                          n_fft=1024, hop_length=None, energy_threshold=0.01):
@@ -16,7 +40,7 @@ def get_main_freq_traj(audio_path, freq_min=20000, freq_max=125000,
     freq_max : float
         Maximum frequency (Hz) to consider. Default 125kHz (adjust based on your sample rate).
     n_fft : int
-        FFT window size for the spectrogram. Smaller = better time resolution, worse frequency resolution.
+        FFT window size for the spectrogram.
     hop_length : int or None
         Number of samples between successive frames. Defaults to n_fft // 4 if None.
     energy_threshold : float
@@ -29,16 +53,7 @@ def get_main_freq_traj(audio_path, freq_min=20000, freq_max=125000,
     freq_traj : np.ndarray
         Dominant frequency (Hz) at each time point. NaN where energy is below threshold.
     """
-    y, sr = librosa.load(audio_path, sr=None)
-
-    if hop_length is None:
-        hop_length = n_fft // 4
-
-    # Compute spectrogram
-    D = librosa.stft(y, n_fft=n_fft, hop_length=hop_length)
-    magnitude = np.abs(D)
-    freqs = librosa.fft_frequencies(sr=sr, n_fft=n_fft)
-    times = librosa.frames_to_time(np.arange(D.shape[1]), sr=sr, hop_length=hop_length)
+    times, freqs, magnitude = get_spectrogram(audio_path, n_fft=n_fft, hop_length=hop_length)
 
     # Restrict to USV frequency range
     freq_mask = (freqs >= freq_min) & (freqs <= freq_max)
