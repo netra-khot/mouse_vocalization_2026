@@ -1,6 +1,11 @@
 # Ziya's Progress Journal
  
 ## June 29, 2026
+**Duration:** 
+
+- Worked on creating the 
+
+## June 29, 2026
 **Duration:** 1 h
 
 - More breakdown of contents in Dryad dataset
