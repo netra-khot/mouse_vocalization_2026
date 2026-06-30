@@ -1,12 +1,8 @@
 # Ziya's Progress Journal
- 
-## June 29, 2026
-**Duration:** 
 
-- Worked on creating the 
 
 ## June 29, 2026
-**Duration:** 1 h
+**Duration:** 45 min
 
 - More breakdown of contents in Dryad dataset
     - USV recordings: 65
@@ -14,6 +10,14 @@
     - Opto files: 3
     - EMG files: 4
     - Other: 1
+- Organized repo w/ folders for each model
+- Added utils.py
+    - Added get_spectrogram -> Use to return the stats (times, freqs, magnitudes) needed to create spectrgram
+    - Added get_main_freq_traj
+- Tested the get_main_freq_traj() method in model.ipynb (in freq-to-usv model)
+    - Next step: need to improve function
+        - If there's no sound in a certain area of the spectrogram, it should be balnk on the main-freq traj graph
+            - Currently, I think it's hallucinating a pattern when there's really just no vocalization in the clip
 
 ## June 27, 2026
 **Duration:**  1 h
