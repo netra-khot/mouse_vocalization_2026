@@ -1,7 +1,25 @@
 # Ziya's Progress Journal
 
+## Jul 1, 2026
+**Duration:** 1 h
+
+- Worked with the forked QMC_ratUSV repo
+- Trying to go from MATLAB -> PyTorch
+    - Started off with the subglottal_pressure.m file
+    - I think I now have a decent enough grasp of the math going on to move forward
+        - Made notes on a Google Doc
+        - In short, they're using linear interpolation to calculate the subglottal pressure from the RM_activity
+- Ran into an issue: all of the physiological constants are for rats, not mice!!
+    - Identified six variables which we'd need to find the values for in terms of mice
+        - pressure_max, area_cart_max, area_memb_max, length_max, length_min, tracheal_area
+        - (also have these on Google Doc w/ better description + notes)
+    - I think I found the values for mice for three of these? -> Most were in the Mahrt et al. 2016 paper
+        - Still need to triple check this, b/c these values are really important for the model
+    - Not sure where I'm going to find the other values
+        - Will email Dr. Tripp by tmrw if it looks like a dead end
+
 ## June 29, 2026
-**Duration:** 45 min
+**Duration:** 3 h
 
 - More breakdown of contents in Dryad dataset
     - USV recordings: 65
